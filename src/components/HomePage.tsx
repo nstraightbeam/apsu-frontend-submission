@@ -21,6 +21,13 @@ import { TreatmentCard, TreatmentSection, ProductCard } from './TreatmentCard';
 import { ConsultationDialog, type DialogState } from './ConsultationDialog';
 export function HomePage({ content }: { content: HomeContent }) {
   const [dialog, setDialog] = useState<DialogState>(null);
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'instant'
+        : 'smooth',
+    });
+  };
   const start = (treatment?: TreatmentId) => setDialog({ kind: 'consultation', treatment });
   const info = (title: string, text: string) => setDialog({ kind: 'information', title, text });
   return (
@@ -59,7 +66,11 @@ export function HomePage({ content }: { content: HomeContent }) {
                   <div>
                     {[...content.languages.slice(0, 6), ...content.languages.slice(0, 4)].map(
                       (l, i) => (
-                        <span className={l === '中文' ? 'selected' : ''} key={`${l}-${i}`}>
+                        <span
+                          className={l === '中文' ? 'selected' : ''}
+                          aria-hidden={i >= 6 || undefined}
+                          key={`${l}-${i}`}
+                        >
                           {l}
                         </span>
                       ),
@@ -67,7 +78,11 @@ export function HomePage({ content }: { content: HomeContent }) {
                   </div>
                   <div>
                     {[...content.languages.slice(6), ...content.languages.slice(6)].map((l, i) => (
-                      <span className={l === 'Português' ? 'selected' : ''} key={`${l}-${i}`}>
+                      <span
+                        className={l === 'Português' ? 'selected' : ''}
+                        aria-hidden={i >= content.languages.slice(6).length || undefined}
+                        key={`${l}-${i}`}
+                      >
                         {l}
                       </span>
                     ))}
@@ -76,13 +91,7 @@ export function HomePage({ content }: { content: HomeContent }) {
               </section>
               <div className="treatment-grid">
                 {content.treatments.map((t) => (
-                  <TreatmentCard
-                    key={t.id}
-                    treatment={t}
-                    onSelect={() =>
-                      document.getElementById(t.id)?.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  />
+                  <TreatmentCard key={t.id} treatment={t} onSelect={() => scrollToSection(t.id)} />
                 ))}
               </div>
             </div>
@@ -135,11 +144,7 @@ export function HomePage({ content }: { content: HomeContent }) {
               <div key={t.id}>
                 <TreatmentSection
                   treatment={t}
-                  onSelect={() =>
-                    t.id === 'weight-loss'
-                      ? document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' })
-                      : start(t.id)
-                  }
+                  onSelect={() => (t.id === 'weight-loss' ? scrollToSection('plans') : start(t.id))}
                 />
                 {t.id === 'weight-loss' && (
                   <>
@@ -170,8 +175,8 @@ export function HomePage({ content }: { content: HomeContent }) {
                 >
                   {t.image ? (
                     <Image
-                      width={1200}
-                      height={1200}
+                      width={t.image.width}
+                      height={t.image.height}
                       sizes="(max-width: 640px) 100vw, 650px"
                       src={t.image.src}
                       alt={t.image.alt}

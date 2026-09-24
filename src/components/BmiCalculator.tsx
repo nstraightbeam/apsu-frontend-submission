@@ -68,6 +68,7 @@ export function BmiCalculator({
                   aria-label={units === 'metric' ? 'Height in centimeters' : 'Height in feet'}
                   inputMode="decimal"
                   type="number"
+                  step="any"
                   placeholder="0"
                   value={height}
                   onChange={(e) => {
@@ -83,6 +84,7 @@ export function BmiCalculator({
                     aria-label="Height in inches"
                     inputMode="decimal"
                     type="number"
+                    step="any"
                     placeholder="0"
                     value={inches}
                     onChange={(e) => {
@@ -102,6 +104,7 @@ export function BmiCalculator({
                 aria-label={units === 'metric' ? 'Weight in kilograms' : 'Weight in pounds'}
                 inputMode="decimal"
                 type="number"
+                step="any"
                 placeholder="0"
                 value={weight}
                 onChange={(e) => {
@@ -139,8 +142,8 @@ export function BmiCalculator({
         )}
         <div className="bmi-bands">
           <span>Underweight &lt;18.5</span>
-          <span>Healthy 18.5–24.9</span>
-          <span>Overweight 25–29.9</span>
+          <span>Healthy 18.5–&lt;25</span>
+          <span>Overweight 25–&lt;30</span>
           <span>Obesity ≥30</span>
         </div>
         <button className="text-link" onClick={onExplore}>

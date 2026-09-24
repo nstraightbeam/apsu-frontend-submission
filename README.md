@@ -4,7 +4,6 @@ A responsive implementation of the supplied Apsu design, built with Next.js App 
 
 ## Run locally
 
-Use Node.js 22 or newer.
 
 ```sh
 npm install
@@ -21,8 +20,6 @@ npm run build-storybook
 npm run format:check
 ```
 
-No environment variables, credentials or backend services are required. Commit `package-lock.json`; `npm ci` is available for repeatable installation. The dev wrapper uses Webpack polling to avoid macOS file-watcher limits. Production builds use Next.js's default bundler.
-
 ## Structure and API boundary
 
 - `src/app/page.tsx` loads content at the server boundary through `getHomeContent()`.
@@ -31,7 +28,7 @@ No environment variables, credentials or backend services are required. Commit `
 - `src/components` contains reusable page sections and stateful controls.
 - `src/lib/bmi.ts` contains the calculation and validation, independently covered by boundary tests.
 - `src/components/*.stories.tsx` documents components, interaction states and full desktop/mobile pages.
-- `public` holds local fonts and original design imagery. Next Image provides responsive image optimization.
+- `public` holds local fonts and original design imagery. Next Image provides responsive image optimization, using the source dimensions defined in the typed image metadata.
 
 Prices use integer minor currency units. IDs are stable identifiers rather than array positions. TypeScript contracts do not replace runtime validation of future network responses. Nothing is sent, stored or booked by this demonstration.
 
@@ -60,11 +57,11 @@ The following deviations are intentional:
 - BMI supports metric and imperial input, clears stale results when inputs change, clears inputs when switching units, rejects implausible/non-finite values and announces results/errors.
 - FAQs use a single-open accordion, with the first question open initially; all can be closed.
 - Services use a native horizontal scroll-snap track with touch/trackpad scrolling, keyboard arrow support and previous/next controls disabled at the ends. No autoplay.
-- Buttons have hover, pressed, keyboard-focus and disabled styles. Motion is reduced when the system requests it.
+- Buttons have hover, pressed, keyboard-focus and disabled styles. Motion is reduced when the system requests it, including programmatic section navigation. Repeated decorative language chips are hidden from assistive technology.
 
 ## Storybook
 
-Stories cover button variants and interaction styles; desktop/mobile navigation and open menu; metric/imperial empty BMI, invalid input and all four result categories; every FAQ answer and all-closed state; carousel start/middle/end; closed/open consultation, three treatment selections, completion, login and information dialogs; all treatment-card variants; and full home-page desktop/mobile views. The accessibility addon is enabled for interactive inspection.
+Stories cover button variants and interaction styles; desktop/mobile navigation and open menu; metric/imperial empty BMI, invalid input and all four result categories; every FAQ answer and all-closed state; carousel start/middle/end; closed/open consultation, three treatment selections, completion, login and information dialogs; all treatment-card variants; and full home-page desktop/mobile views. The accessibility addon is enabled for interactive inspection. Dialog stories update their controls when dismissed, so close and Escape behavior can be exercised directly.
 
 ## Verification
 
@@ -75,7 +72,3 @@ Stories cover button variants and interaction styles; desktop/mobile navigation 
 - Manual browser interaction checks for BMI calculation/errors, FAQ state, consultation preselection/completion/dismissal, mobile navigation and carousel boundaries.
 
 These are manual UI checks and unit/build checks, not an automated end-to-end or pixel-comparison suite. No live authentication, payment, prescribing or API integration is included.
-
-## Assets and sources
-
-Images were downloaded from the user-provided Figma file for this assignment; rights remain with their respective owners. Work Sans and Syne font licenses are in `public/fonts/licenses`. Icons are provided by the Lucide package. Adult BMI reference: [CDC adult BMI categories](https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html).

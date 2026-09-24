@@ -15,18 +15,30 @@ export function ServiceCarousel({
   function measure() {
     const el = track.current;
     if (!el) return;
-    const width = (el.firstElementChild as HTMLElement)?.offsetWidth + 24;
+    const cards = Array.from(el.children) as HTMLElement[];
+    const first = cards[0];
+    const index = first
+      ? cards.reduce(
+          (nearest, card, i) =>
+            Math.abs(card.offsetLeft - first.offsetLeft - el.scrollLeft) <
+            Math.abs(cards[nearest].offsetLeft - first.offsetLeft - el.scrollLeft)
+              ? i
+              : nearest,
+          0,
+        )
+      : 0;
     setPosition({
       start: el.scrollLeft < 2,
       end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2,
-      index: width ? Math.round(el.scrollLeft / width) : 0,
+      index,
     });
   }
   useEffect(() => {
     const el = track.current;
     if (!el) return;
     const card = el.children[initialIndex] as HTMLElement | undefined;
-    if (card) el.scrollLeft = card.offsetLeft - el.offsetLeft;
+    if (card && el.firstElementChild)
+      el.scrollLeft = card.offsetLeft - (el.firstElementChild as HTMLElement).offsetLeft;
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
@@ -35,7 +47,9 @@ export function ServiceCarousel({
   function move(direction: number) {
     const el = track.current;
     if (!el) return;
-    const width = (el.firstElementChild as HTMLElement).offsetWidth + 24;
+    const first = el.firstElementChild as HTMLElement | null;
+    if (!first) return;
+    const width = first.offsetWidth + (parseFloat(getComputedStyle(el).columnGap) || 0);
     el.scrollBy({
       left: direction * width,
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -98,8 +112,8 @@ export function ServiceCarousel({
             aria-label={`${i + 1} of ${items.length}: ${item.title}`}
           >
             <Image
-              width={1200}
-              height={1200}
+              width={item.image.width}
+              height={item.image.height}
               sizes="(max-width: 640px) 100vw, 650px"
               src={item.image.src}
               alt={item.image.alt}
@@ -110,7 +124,9 @@ export function ServiceCarousel({
         ))}
       </div>
       <span className="sr-only" aria-live="polite">
-        First visible service {position.index + 1} of {items.length}
+        {items.length
+          ? `First visible service ${position.index + 1} of ${items.length}`
+          : 'No services available'}
       </span>
     </section>
   );

@@ -1,9 +1,20 @@
 import type { HomeContent, ImageAsset } from './contracts';
-const image = (name: string, alt: string, width = 800, height = 900): ImageAsset => ({
+const imageSizes = {
+  'weight-person': [1185, 1327],
+  'birth-person': [1457, 2697],
+  'sleep-person': [1901, 2429],
+  'vial-tilted': [4096, 4096],
+  'provider-phone': [1109, 832],
+  'care-team': [4096, 2304],
+  medication: [314, 203],
+  shipping: [342, 512],
+  testimonial: [512, 342],
+} as const;
+const image = (name: keyof typeof imageSizes, alt: string): ImageAsset => ({
   src: `/images/${name}.png`,
   alt,
-  width,
-  height,
+  width: imageSizes[name][0],
+  height: imageSizes[name][1],
 });
 export const homeContent = {
   hero: {
@@ -82,24 +93,14 @@ export const homeContent = {
       treatmentId: 'weight-loss',
       name: 'Compounded Semaglutide',
       price: { amountMinor: 20000, currency: 'USD', interval: 'month' },
-      image: image(
-        'vial-tilted',
-        'Illustrative medication vial; actual packaging varies',
-        420,
-        480,
-      ),
+      image: image('vial-tilted', 'Illustrative medication vial; actual packaging varies'),
     },
     {
       id: 'tirzepatide',
       treatmentId: 'weight-loss',
       name: 'Compounded Tirzepatide',
       price: { amountMinor: 20000, currency: 'USD', interval: 'month' },
-      image: image(
-        'vial-tilted',
-        'Illustrative medication vial; actual packaging varies',
-        420,
-        480,
-      ),
+      image: image('vial-tilted', 'Illustrative medication vial; actual packaging varies'),
     },
   ],
   careLayers: [

@@ -1,9 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { useArgs } from 'storybook/preview-api';
 import { ConsultationDialog } from './ConsultationDialog';
 import { homeContent } from '../data/home';
 const meta = {
   title: 'Flows/Consultation dialog',
   component: ConsultationDialog,
+  render: function InteractiveDialog(args) {
+    const [, updateArgs] = useArgs();
+    return <ConsultationDialog {...args} onClose={() => updateArgs({ state: null })} />;
+  },
   args: { state: { kind: 'consultation' }, onClose: () => {}, languages: homeContent.languages },
 } satisfies Meta<typeof ConsultationDialog>;
 export default meta;

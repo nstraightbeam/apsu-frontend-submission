@@ -29,8 +29,8 @@ export function TreatmentCard({
       <p className="eyebrow">{treatment.label}</p>
       <h3>{treatment.summary}</h3>
       <Image
-        width={1200}
-        height={1200}
+        width={treatment.id === 'weight-loss' ? 4096 : treatment.image.width}
+        height={treatment.id === 'weight-loss' ? 4096 : treatment.image.height}
         sizes="(max-width: 640px) 100vw, 650px"
         src={treatment.id === 'weight-loss' ? '/images/vial.png' : treatment.image.src}
         alt=""
@@ -70,8 +70,8 @@ export function TreatmentSection({
       </div>
       <div className="treatment-portrait">
         <Image
-          width={1200}
-          height={1200}
+          width={treatment.image.width}
+          height={treatment.image.height}
           sizes="(max-width: 640px) 100vw, 650px"
           src={treatment.image.src}
           alt={treatment.image.alt}
@@ -95,8 +95,8 @@ export function ProductCard({ product, onSelect }: { product: Product; onSelect:
     <article className="product-card panel">
       <div className="product-image">
         <Image
-          width={1200}
-          height={1200}
+          width={product.image.width}
+          height={product.image.height}
           sizes="(max-width: 640px) 100vw, 650px"
           src={product.image.src}
           alt={product.image.alt}
