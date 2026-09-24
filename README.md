@@ -76,6 +76,3 @@ Stories cover button variants and interaction styles; desktop/mobile navigation 
 
 These are manual UI checks and unit/build checks, not an automated end-to-end or pixel-comparison suite. No live authentication, payment, prescribing or API integration is included.
 
-## Assets and sources
-
-Images were downloaded from the user-provided Figma file for this assignment; rights remain with their respective owners. Work Sans and Syne font licenses are in `public/fonts/licenses`. Icons are provided by the Lucide package. Adult BMI reference: [CDC adult BMI categories](https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html).
