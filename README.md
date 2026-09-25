@@ -71,8 +71,6 @@ Stories cover button variants and interaction styles; desktop/mobile navigation 
 - Browser checks at mobile and desktop sizes, plus intermediate breakpoint checks for page overflow.
 - Manual browser interaction checks for BMI calculation/errors, FAQ state, consultation preselection/completion/dismissal, mobile navigation and carousel boundaries.
 
-<<<<<<< HEAD
-These are manual UI checks and unit/build checks, not an automated end-to-end or pixel-comparison suite. No live authentication, payment, prescribing or API integration is included.
 
 # AI session logs
 
