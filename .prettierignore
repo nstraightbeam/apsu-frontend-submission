@@ -1,0 +1,8 @@
+node_modules
+.next
+storybook-static
+package-lock.json
+ai-logs/*.jsonl
+public
+
+next-env.d.ts
