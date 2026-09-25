@@ -82,6 +82,4 @@ Complete, unedited transcripts of every AI session used on this project.
 | ---------------------------------- | ----------------- | -------------------------------------------------------------------------- |
 | `claude-code-review-session.jsonl` | Claude Code (web) | Review against the assignment brief                                        |
 
-Each `.jsonl` line is one event (user message, assistant message, tool call or tool result) exactly as Claude Code recorded it; screenshots taken during the session are embedded as base64.
-=======
->>>>>>> d70db9b62cdff3fba3d95d5d6fca94feaec25d0b
+
